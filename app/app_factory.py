@@ -14,6 +14,6 @@ def create_app(config_filename):
 
     @app.route("/")
     def hello():
-        return "Hello World!: DEBUG: {} TEST_VALUE: {}".format(app.config["DEBUG"], app.config["TEST_VALUE"])
+        return "Hello World!: DEBUG: {}".format(app.config["DEBUG"])
 
     return app
