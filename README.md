@@ -1,19 +1,18 @@
-# Openshift quickstart: Django
+# Openshift quickstart: Flask
 
-This is a [Django](http://www.djangoproject.com) project that you can use as the starting point to develop your own and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
+This is a [Flask](http://flask.pocoo.org/) project that you can use as the starting point to develop your own and deploy it on an [OpenShift](https://github.com/openshift/origin) cluster.
 
 The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
 ## What has been done for you
 
-This is a minimal Django 1.11 project. It was created with these steps:
+This is a minimal Flask `0.12.2` project. It was created with these steps:
 
 1. Create a virtualenv
-2. Manually install Django and other dependencies
+2. Manually install Flask and other dependencies
 3. `pip freeze > requirements.txt`
-4. `django-admin startproject project .`
-3. Update `project/settings.py` to configure `SECRET_KEY`, `DATABASE` and `STATIC_ROOT` entries
-4. `./manage.py startapp welcome`, to create the welcome page's app
+3. Configure `SECRET_KEY`, `DB_NAME`, `DB_USER`, `DB_PORT`, `DB_SERVICE_NAME`, `DB_ENGINE` and `FLASK_APP` entries
+4. Display a hello world with some info
 
 From this initial state you can:
 * create new Django apps
@@ -24,7 +23,7 @@ From this initial state you can:
 
 ## Special files in this repository
 
-Apart from the regular files created by Django (`project/*`, `welcome/*`, `manage.py`), this repository contains:
+Apart from the regular files  (`app/`, `wsgi.py`), this repository contains:
 
 ```
 openshift/         - OpenShift-specific files
@@ -59,7 +58,7 @@ To run this project in your development machine, follow these steps:
 
 3. Fork this repo and clone your fork:
 
-    `git clone https://github.com/openshift/django-ex.git`
+    `git clone https://github.com/renefs/flask-ex.git`
 
 4. Install dependencies:
 
