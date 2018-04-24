@@ -49,6 +49,8 @@ To run this project in your development machine, follow these steps:
 
 1. (optional) Create and activate a [virtualenv](https://virtualenv.pypa.io/) (you may want to use [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/)).
 
+   `python -m venv ./venv && source venv/bin/activate`
+
 2. Ensure that the executable `pg_config` is available on your machine. You can check this using `which pg_config`. If not, install the dependency with one of the following.
   - macOS: `brew install postgresql` using [Homebrew](https://brew.sh/)
   - Ubuntu: `sudo apt-get install libpq-dev`
@@ -57,11 +59,6 @@ To run this project in your development machine, follow these steps:
 3. Fork this repo and clone your fork:
 
     `git clone https://github.com/renefs/flask-ex.git`
-
-
-4. Set and activate your virtual environment:
-
-    `python -m venv ./venv && source venv/bin/activate`
 
 4. Install dependencies:
 
