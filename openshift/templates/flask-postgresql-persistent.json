@@ -495,13 +495,6 @@
       "value": "postgres"
     },
     {
-      "name": "APP_LOGS_EMAIL_TO",
-      "displayName": "Logs File",
-      "description": "Path to the logs file",
-      "required": true,
-      "value": " "
-    },
-    {
       "name": "APP_SECRET_KEY",
       "displayName": "Logs File",
       "description": "Path to the logs file",
