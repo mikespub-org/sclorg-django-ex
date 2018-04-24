@@ -15,9 +15,7 @@ This is a minimal Flask `0.12.2` project. It was created with these steps:
 4. Display a hello world with some info
 
 From this initial state you can:
-* create new Django apps
-* remove the `welcome` app
-* rename the Django project
+* develop your Flask project
 * update settings to suit your needs
 * install more Python libraries and add them to the `requirements.txt` file
 
@@ -64,15 +62,11 @@ To run this project in your development machine, follow these steps:
 
     `pip install -r requirements.txt`
 
-5. Create a development database:
-
-    `./manage.py migrate`
-
-6. If everything is alright, you should be able to start the Django development server:
+6. If everything is alright, you should be able to start the Flask development server:
 
     `./manage.py runserver`
 
-7. Open your browser and go to http://127.0.0.1:8000, you will be greeted with a welcome page.
+7. Open your browser and go to http://127.0.0.1:8080, you will be greeted with a welcome page.
 
 
 ## Deploying to OpenShift
