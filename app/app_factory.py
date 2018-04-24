@@ -38,6 +38,8 @@ def setup_db(app):
         _basedir = os.path.abspath(os.path.dirname(__file__))
         app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(_basedir, 'webapp.db')
 
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
     db.init_app(app)
     Migrate(app, db)
     db.app = app
