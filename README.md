@@ -64,7 +64,7 @@ To run this project in your development machine, follow these steps:
 
 6. If everything is alright, you should be able to start the Flask development server:
 
-    `./manage.py runserver`
+    `FLASK_APP=wsgi.py flask run`
 
 7. Open your browser and go to http://127.0.0.1:8080, you will be greeted with a welcome page.
 
