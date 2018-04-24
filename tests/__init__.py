@@ -5,9 +5,10 @@ from app.extensions import db
 from app.settings import FileConfiguration
 from tests import config_test
 
+_basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 def create_test_app():
-    _basedir = os.path.abspath(os.path.dirname(__file__))
 
     config = FileConfiguration(config_test)
     application = create_app(config)
@@ -27,3 +28,7 @@ class BaseTestCase(TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        try:
+            os.remove(os.path.join(_basedir, 'test_app.db'))
+        except OSError:
+            pass
