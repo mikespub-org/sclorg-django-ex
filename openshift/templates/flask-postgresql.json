@@ -2,23 +2,23 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "django-psql-example",
+    "name": "flask-psql-example",
     "annotations": {
-      "openshift.io/display-name": "Django + PostgreSQL (Ephemeral)",
-      "description": "An example Django application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.\n\nWARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.",
-      "tags": "quickstart,python,django",
+      "openshift.io/display-name": "Flask + PostgreSQL (Ephemeral)",
+      "description": "An example Flask application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/renefs/flask-ex/blob/master/README.md.\n\nWARNING: Any data stored will be lost upon pod destruction. Only use this template for testing.",
+      "tags": "quickstart,python,flask",
       "iconClass": "icon-python",
-      "openshift.io/long-description": "This template defines resources needed to develop a Django based application, including a build configuration, application deployment configuration, and database deployment configuration.  The database is stored in non-persistent storage, so this configuration should be used for experimental purposes only.",
+      "openshift.io/long-description": "This template defines resources needed to develop a Flask based application, including a build configuration, application deployment configuration, and database deployment configuration.  The database is stored in non-persistent storage, so this configuration should be used for experimental purposes only.",
       "openshift.io/provider-display-name": "Red Hat, Inc.",
-      "openshift.io/documentation-url": "https://github.com/openshift/django-ex",
+      "openshift.io/documentation-url": "https://github.com/renefs/flask-ex",
       "openshift.io/support-url": "https://access.redhat.com",
       "template.openshift.io/bindable": "false"
     }
   },
-  "message": "The following service(s) have been created in your project: ${NAME}, ${DATABASE_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.",
+  "message": "The following service(s) have been created in your project: ${NAME}, ${APP_DB_SERVICE_NAME}.\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/openshift/flask-ex/blob/master/README.md.",
   "labels": {
-      "template": "django-psql-example",
-      "app": "django-psql-example"
+      "template": "flask-psql-example",
+      "app": "flask-psql-example"
   },
   "objects": [
     {
@@ -28,9 +28,9 @@
         "name": "${NAME}"
       },
       "stringData" : {
-        "database-user" : "${DATABASE_USER}",
-        "database-password" : "${DATABASE_PASSWORD}",
-        "django-secret-key" : "${DJANGO_SECRET_KEY}"
+        "database-user" : "${APP_DB_USER}",
+        "database-password" : "${APP_DB_PASSWORD}",
+        "app-secret-key" : "${APP_SECRET_KEY}"
       }
     },
     {
@@ -40,7 +40,7 @@
         "name": "${NAME}",
         "annotations": {
           "description": "Exposes and load balances the application pods",
-          "service.alpha.openshift.io/dependencies": "[{\"name\": \"${DATABASE_SERVICE_NAME}\", \"kind\": \"Service\"}]"
+          "service.alpha.openshift.io/dependencies": "[{\"name\": \"${APP_DB_SERVICE_NAME}\", \"kind\": \"Service\"}]"
         }
       },
       "spec": {
@@ -105,7 +105,7 @@
             "from": {
               "kind": "ImageStreamTag",
               "namespace": "${NAMESPACE}",
-              "name": "python:3.5"
+              "name": "python:3.6"
             },
             "env": [
               {
@@ -134,10 +134,7 @@
               "secret": "${GITHUB_WEBHOOK_SECRET}"
             }
           }
-        ],
-        "postCommit": {
-           "script": "./manage.py test"
-        }
+        ]
       }
     },
     {
@@ -160,7 +157,7 @@
             "imageChangeParams": {
               "automatic": true,
               "containerNames": [
-                "django-psql-example"
+                "flask-psql-example"
               ],
               "from": {
                 "kind": "ImageStreamTag",
@@ -186,7 +183,7 @@
           "spec": {
             "containers": [
               {
-                "name": "django-psql-example",
+                "name": "flask-psql-example",
                 "image": " ",
                 "ports": [
                   {
@@ -197,7 +194,7 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 3,
                   "httpGet": {
-                    "path": "/health",
+                    "path": "/",
                     "port": 8080
                   }
                 },
@@ -205,25 +202,29 @@
                   "timeoutSeconds": 3,
                   "initialDelaySeconds": 30,
                   "httpGet": {
-                    "path": "/health",
+                    "path": "/",
                     "port": 8080
                   }
                 },
                 "env": [
                   {
-                    "name": "DATABASE_SERVICE_NAME",
-                    "value": "${DATABASE_SERVICE_NAME}"
+                    "name": "APP_DB_SERVICE_NAME",
+                    "value": "${APP_DB_SERVICE_NAME}"
                   },
                   {
-                    "name": "DATABASE_ENGINE",
-                    "value": "${DATABASE_ENGINE}"
+                    "name": "APP_DB_ENGINE",
+                    "value": "${APP_DB_ENGINE}"
                   },
                   {
-                    "name": "DATABASE_NAME",
-                    "value": "${DATABASE_NAME}"
+                    "name": "APP_DB_NAME",
+                    "value": "${APP_DB_NAME}"
                   },
                   {
-                    "name": "DATABASE_USER",
+                    "name": "APP_DB_PORT",
+                    "value": "${APP_DB_PORT}"
+                  },
+                  {
+                    "name": "APP_DB_USER",
                     "valueFrom": {
                       "secretKeyRef" : {
                         "name" : "${NAME}",
@@ -232,7 +233,7 @@
                     }
                   },
                   {
-                    "name": "DATABASE_PASSWORD",
+                    "name": "APP_DB_PASSWORD",
                     "valueFrom": {
                       "secretKeyRef" : {
                         "name" : "${NAME}",
@@ -245,11 +246,11 @@
                     "value": "${APP_CONFIG}"
                   },
                   {
-                    "name": "DJANGO_SECRET_KEY",
+                    "name": "APP_SECRET_KEY",
                     "valueFrom": {
                       "secretKeyRef" : {
                         "name" : "${NAME}",
-                        "key" : "django-secret-key"
+                        "key" : "app-secret-key"
                       }
                     }
                   }
@@ -269,7 +270,7 @@
       "kind": "Service",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${DATABASE_SERVICE_NAME}",
+        "name": "${APP_DB_SERVICE_NAME}",
         "annotations": {
           "description": "Exposes the database server"
         }
@@ -283,7 +284,7 @@
           }
         ],
         "selector": {
-          "name": "${DATABASE_SERVICE_NAME}"
+          "name": "${APP_DB_SERVICE_NAME}"
         }
       }
     },
@@ -291,7 +292,7 @@
       "kind": "DeploymentConfig",
       "apiVersion": "v1",
       "metadata": {
-        "name": "${DATABASE_SERVICE_NAME}",
+        "name": "${APP_DB_SERVICE_NAME}",
         "annotations": {
           "description": "Defines how to deploy the database",
           "template.alpha.openshift.io/wait-for-ready": "true"
@@ -322,13 +323,13 @@
         ],
         "replicas": 1,
         "selector": {
-          "name": "${DATABASE_SERVICE_NAME}"
+          "name": "${APP_DB_SERVICE_NAME}"
         },
         "template": {
           "metadata": {
-            "name": "${DATABASE_SERVICE_NAME}",
+            "name": "${APP_DB_SERVICE_NAME}",
             "labels": {
-              "name": "${DATABASE_SERVICE_NAME}"
+              "name": "${APP_DB_SERVICE_NAME}"
             }
           },
           "spec": {
@@ -368,7 +369,7 @@
                   },
                   {
                     "name": "POSTGRESQL_DATABASE",
-                    "value": "${DATABASE_NAME}"
+                    "value": "${APP_DB_NAME}"
                   }
                 ],
                 "volumeMounts": [
@@ -404,12 +405,58 @@
     }
   ],
   "parameters": [
+        {
+      "name": "APP_DEBUG",
+      "displayName": "Debug",
+      "description": "Debug yes or no",
+      "required": true,
+      "value": "true"
+    },
+    {
+      "name": "APP_DB_ENGINE",
+      "displayName": "Database Engine",
+      "required": true,
+      "description": "Database engine: postgresql, mysql or sqlite (default).",
+      "value": "postgresql"
+    },
+    {
+      "name": "APP_DB_NAME",
+      "displayName": "Database Name",
+      "required": true,
+      "value": "postgres"
+    },
+    {
+      "name": "APP_DB_PASSWORD",
+      "displayName": "Database User Password",
+      "generate": "expression",
+      "from": "[a-zA-Z0-9]{16}"
+    },
+    {
+      "name": "APP_DB_PORT",
+      "displayName": "Debug",
+      "description": "Debug yes or no",
+      "required": true,
+      "value": "5432"
+    },
+    {
+      "name": "APP_DB_SERVICE_NAME",
+      "displayName": "Database Service Name",
+      "required": true,
+      "value": "postgresql"
+    },
+    {
+      "name": "APP_DB_USER",
+      "displayName": "Database User",
+      "description": "User for the database",
+      "required": true,
+      "value": "postgres"
+    },
     {
       "name": "NAME",
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
       "required": true,
-      "value": "django-psql-example"
+      "value": "flask-psql-example"
     },
     {
       "name": "NAMESPACE",
@@ -422,7 +469,7 @@
       "name": "MEMORY_LIMIT",
       "displayName": "Memory Limit",
       "required": true,
-      "description": "Maximum amount of memory the Django container can use.",
+      "description": "Maximum amount of memory the Flask container can use.",
       "value": "512Mi"
     },
     {
@@ -437,7 +484,7 @@
       "displayName": "Git Repository URL",
       "required": true,
       "description": "The URL of the repository with your application source code.",
-      "value": "https://github.com/openshift/django-ex.git"
+      "value": "https://github.com/openshift/flask-ex.git"
     },
     {
       "name": "SOURCE_REPOSITORY_REF",
@@ -452,7 +499,7 @@
     {
       "name": "APPLICATION_DOMAIN",
       "displayName": "Application Hostname",
-      "description": "The exposed hostname that will route to the Django service, if left blank a value will be defaulted.",
+      "description": "The exposed hostname that will route to the Flask service, if left blank a value will be defaulted.",
       "value": ""
     },
     {
@@ -463,44 +510,13 @@
       "from": "[a-zA-Z0-9]{40}"
     },
     {
-      "name": "DATABASE_SERVICE_NAME",
-      "displayName": "Database Service Name",
-      "required": true,
-      "value": "postgresql"
-    },
-    {
-      "name": "DATABASE_ENGINE",
-      "displayName": "Database Engine",
-      "required": true,
-      "description": "Database engine: postgresql, mysql or sqlite (default).",
-      "value": "postgresql"
-    },
-    {
-      "name": "DATABASE_NAME",
-      "displayName": "Database Name",
-      "required": true,
-      "value": "default"
-    },
-    {
-      "name": "DATABASE_USER",
-      "displayName": "Database Username",
-      "required": true,
-      "value": "django"
-    },
-    {
-      "name": "DATABASE_PASSWORD",
-      "displayName": "Database User Password",
-      "generate": "expression",
-      "from": "[a-zA-Z0-9]{16}"
-    },
-    {
       "name": "APP_CONFIG",
       "displayName": "Application Configuration File Path",
       "description": "Relative path to Gunicorn configuration file (optional)."
     },
     {
-      "name": "DJANGO_SECRET_KEY",
-      "displayName": "Django Secret Key",
+      "name": "APP_SECRET_KEY",
+      "displayName": "Flask Secret Key",
       "description": "Set this to a long random string.",
       "generate": "expression",
       "from": "[\\w]{50}"
