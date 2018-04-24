@@ -1,4 +1,7 @@
 from flask import Flask
+from flask_migrate import Migrate
+
+from app.extensions import db
 
 
 def create_app(config_filename):
@@ -11,6 +14,10 @@ def create_app(config_filename):
     print("Creating flask app")
     app = Flask(__name__)
     app.config.from_object(config_filename)
+
+    db.init_app(app)
+    Migrate(app, db)
+    db.app = app
 
     @app.route("/")
     def hello():
