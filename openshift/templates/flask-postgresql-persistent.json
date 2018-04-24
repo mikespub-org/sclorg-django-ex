@@ -5,10 +5,10 @@
     "name": "flask-psql-persistent",
     "annotations": {
       "openshift.io/display-name": "Flask + PostgreSQL",
-      "description": "An example Django application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/renefs/flask-ex/blob/master/README.md.",
+      "description": "An example Flask application with a PostgreSQL database. For more information about using this template, including OpenShift considerations, see https://github.com/renefs/flask-ex/blob/master/README.md.",
       "tags": "quickstart,python,flask",
       "iconClass": "icon-python",
-      "openshift.io/long-description": "This template defines resources needed to develop a Django based application, including a build configuration, application deployment configuration, and database deployment configuration.",
+      "openshift.io/long-description": "This template defines resources needed to develop a Flask based application, including a build configuration, application deployment configuration, and database deployment configuration.",
       "openshift.io/provider-display-name": "Red Hat, Inc.",
       "openshift.io/documentation-url": "https://github.com/renefs/flask-ex",
       "openshift.io/support-url": "https://access.redhat.com",
@@ -136,7 +136,7 @@
           }
         ],
         "postCommit": {
-          "script": ""
+          "script": "pytest"
         }
       }
     },
@@ -519,7 +519,7 @@
       "name": "MEMORY_LIMIT",
       "displayName": "Memory Limit",
       "required": true,
-      "description": "Maximum amount of memory the Django container can use.",
+      "description": "Maximum amount of memory the Flask container can use.",
       "value": "512Mi"
     },
     {
@@ -556,7 +556,7 @@
     {
       "name": "APPLICATION_DOMAIN",
       "displayName": "Application Hostname",
-      "description": "The exposed hostname that will route to the Django service, if left blank a value will be defaulted.",
+      "description": "The exposed hostname that will route to the Flask service, if left blank a value will be defaulted.",
       "value": ""
     },
     {
