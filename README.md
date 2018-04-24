@@ -58,6 +58,11 @@ To run this project in your development machine, follow these steps:
 
     `git clone https://github.com/renefs/flask-ex.git`
 
+
+4. Set and activate your virtual environment:
+
+    `python -m venv ./venv && source venv/bin/activate`
+
 4. Install dependencies:
 
     `pip install -r requirements.txt`
