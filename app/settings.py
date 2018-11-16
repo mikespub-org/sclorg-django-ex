@@ -16,6 +16,10 @@ class FileConfiguration:
     Gets all the configuration parameters from the python module
     """
     def __init__(self, config_module):
+        """
+        Constructor
+        :param config_module: Python module to load the configuration parameters from
+        """
         blacklist = ["os", "basedir"]
         double_underscore = "__"
         for attribute in dir(config_module):

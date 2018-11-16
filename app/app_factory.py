@@ -14,7 +14,6 @@ def create_app(config_filename):
     :param config_filename: The name of the file that will be used for configuration.
     :return: The created application
     """
-    print("Creating a Flask app")
     app = Flask(__name__)
     app.config.from_object(config_filename)
 
@@ -26,18 +25,27 @@ def create_app(config_filename):
     # add whitenoise for static files
     app.wsgi_app = WhiteNoise(app.wsgi_app, root='app/static/')
 
+    print("Creating a Flask app with DEBUG: {}".format(app.debug))
+
     @app.route("/")
     def hello():
-        return "Hello World!: DEBUG: {}".format(app.config["DEBUG"])
+        return "Hello World!: DEBUG: {} Environment: {}".format(app.debug, app.env)
 
     return app
 
 
 def setup_db(app):
-    if app.config.get("APP_DB_ENGINE", None) == "postgresql":
+    """
+    Creates a database for the application
+    :param app: Flask application to use
+    :return:
+    """
+    print("Database Engine is: {}".format(app.config.get("DB_ENGINE", None)))
+    if app.config.get("DB_ENGINE", None) == "postgresql":
+        print("Setting up PostgreSQL database")
         app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://{0}:{1}@{2}:{3}/{4}'.format(
             app.config["DB_USER"],
-            app.config["DB_PASSWORD"],
+            app.config["DB_PASS"],
             app.config["DB_SERVICE_NAME"],
             app.config["DB_PORT"],
             app.config["DB_NAME"]
