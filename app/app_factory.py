@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from whitenoise import WhiteNoise
+from werkzeug.contrib.fixers import ProxyFix
 
 from app.extensions import db
 
@@ -19,7 +20,10 @@ def create_app(config_filename):
 
     setup_db(app)
 
-    # add whitenoise
+    # Add ProxyFix for HTTP headers
+    app.wsgi_app = ProxyFix(app.wsgi_app)
+
+    # add whitenoise for static files
     app.wsgi_app = WhiteNoise(app.wsgi_app, root='app/static/')
 
     @app.route("/")
