@@ -3,10 +3,10 @@ from tests import BaseTestCase
 
 class IndexTest(BaseTestCase):
     """
-    Test that index is accesible
+    Test that index is accessible
     """
 
-    def test_login_admin(self):
+    def test_index(self):
         with self.client:
             result = self.client.get("/")
             expected_content = "Hello World"
