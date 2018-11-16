@@ -14,7 +14,7 @@ def create_app(config_filename):
     :param config_filename: The name of the file that will be used for configuration.
     :return: The created application
     """
-    print("Creating flask app")
+    print("Creating a Flask app")
     app = Flask(__name__)
     app.config.from_object(config_filename)
 
