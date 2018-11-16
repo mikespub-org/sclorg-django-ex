@@ -20,7 +20,7 @@ def create_app(config_filename):
     setup_db(app)
 
     # add whitenoise
-    app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
+    app.wsgi_app = WhiteNoise(app.wsgi_app, root='app/static/')
 
     @app.route("/")
     def hello():
