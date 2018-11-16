@@ -2,11 +2,27 @@ version: '3'
 services:
   web:
     build: .
+    depends_on:
+    - postgresql
+    env_file:
+    - web-variables.env
+    environment:
+      - FLASK_APP=/opt/app-root/src/wsgi.py
     working_dir: /opt/app-root/src
     ports:
-      - 8080:8080
+    - 8080:8080
     volumes:
-      - ./app/:/opt/app-root/src/app
-      - ./tests/:/opt/app-root/src/tests
-      - ./wsgi.py/:/opt/app-root/src/wsgi.py
-    command: gunicorn -b 0.0.0.0:8080 wsgi:application --reload
+    - ./app/:/opt/app-root/src/app
+    - ./tests/:/opt/app-root/src/tests
+    - ./migrations/:/opt/app-root/src/migrations
+    - ./wsgi.py/:/opt/app-root/src/wsgi.py
+    command: flask run -h 0.0.0.0 -p 8080
+
+  postgresql:
+    image: "postgres:9.6"
+    volumes:
+    - /var/lib/postgresql
+    ports:
+    - 5432:5432
+
+
