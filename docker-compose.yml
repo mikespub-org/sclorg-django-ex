@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    build: .
+    working_dir: /opt/app-root/src
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app/:/opt/app-root/src/app
+      - ./tests/:/opt/app-root/src/tests
+      - ./wsgi.py/:/opt/app-root/src/wsgi.py
+    command: gunicorn -b 0.0.0.0:8080 wsgi:application --reload
