@@ -3,6 +3,10 @@ from flask_env import MetaFlaskEnv
 
 
 class EnvConfiguration(metaclass=MetaFlaskEnv):
+    """
+    This configuration class will loadd all the environment variables that start with the ENV_PREFIX into the
+    app configuration automatically
+    """
     ENV_PREFIX = 'APP_'
     ENV_LOAD_ALL = True
 
