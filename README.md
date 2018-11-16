@@ -6,9 +6,8 @@ The steps in this document assume that you have access to an OpenShift deploymen
 
 ## What has been done for you
 
-This is a minimal Flask `0.12.2` project. It was created with these steps:
+This is a minimal Flask `1.0.2` project. It was created with these steps:
 
-1. Create a virtualenv
 2. Manually install Flask and other dependencies
 3. Load automatically all the env variables starting with `APP_`
 3. `pip freeze > requirements.txt`
@@ -25,86 +24,116 @@ From this initial state you can:
 Apart from the regular files  (`app/`, `wsgi.py`), this repository contains:
 
 ```
-openshift/         - OpenShift-specific files
-└── templates      - application templates
+Dockerfile                  - Docker file to run the application 
+docker-compose.yml          - Docker Compose file to run application and services 
+migrations/                 - Application database migrations if needed 
+tests/                      - Application tests 
 
-requirements.txt   - list of dependencies
+openshift/                  - OpenShift-specific files
+└── templates               - Application templates
+
+requirements.txt            - List of dependencies
+web-variables.env.sample    - Application sample configuration
 ```
 
-## Warnings
+## Notes
 
-Please be sure to read the following warnings and considerations before running this code on your local workstation, shared systems, or production environments.
-
-### Database configuration
-
-The sample application code and templates in this repository contain database connection settings and credentials that rely on being able to use sqlite.
-
-### Automatic test execution
-
-The sample application code and templates in this repository contain scripts that automatically execute tests via the postCommit hook.  These tests assume that they are being executed against a local test sqlite database. If alternate database credentials are supplied to the build, the tests could make undesireable changes to that database.
+`[container]` was added to the commands that need to be run inside a container.
+If it is not specified, by default it will be on the local machine.
 
 ## Local development
 
-To run this project in your development machine, follow these steps:
+To develop locally this project it is reyou can use `Docker` and `Docker Compose`
 
-1. (optional) Create and activate a [virtualenv](https://virtualenv.pypa.io/) (you may want to use [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/)).
-
-   `python -m venv ./venv && source venv/bin/activate`
-
-2. Ensure that the executable `pg_config` is available on your machine. You can check this using `which pg_config`. If not, install the dependency with one of the following.
-  - macOS: `brew install postgresql` using [Homebrew](https://brew.sh/)
-  - Ubuntu: `sudo apt-get install libpq-dev`
-  - [Others](https://stackoverflow.com/a/12037133/8122577)
-
-3. Fork this repo and clone your fork:
+1. Fork this repo and clone your fork:
 
     `git clone https://github.com/renefs/flask-ex.git`
 
-4. Install dependencies:
+2. Rename the `web-variables.env.sample` file to `web-variables.env`
+3. Build the Docker image:
 
-    `pip install -r requirements.txt`
+    `docker-compose build`
 
-6. If everything is alright, you should be able to start the Flask development server:
+4. Run the Docker image and PostgreSQL services:
 
-    `FLASK_APP=wsgi.py flask run`
+    `docker-compose up`
 
-7. Open your browser and go to `http://127.0.0.1:5000`, you will be greeted with a welcome page.
+5. Open your browser and go to `http://127.0.0.1:8080`. 
+You will be greeted with a welcome page.
 
+## Testing
+
+```bash
+docker-compose run web bash
+[container] pytest
+```
 
 ## Deploying to OpenShift
 
-To follow the next steps, you need to be logged in to an OpenShift cluster and have an OpenShift project where you can work on.
+To follow the next steps, you need to be logged in to an OpenShift
+ cluster and have an OpenShift project where you can work on.
 
+### Local Openshift cluster
+
+You can have your own Openshift cluster running locally for testing purposes 
+with the following command:
+
+```bash
+oc cluster up
+```
+
+Once up, follow the instructions on the screen to access the console and login.
+
+You can shutdown the cluster running:
+
+```bash
+oc cluster down
+```
 
 ### Using an application template
 
-The directory `openshift/templates/` contains OpenShift application templates that you can add to your OpenShift project with:
+The easiest way to run your application is from the command line with the 
+following commands:
+
+```bash
+oc new-app openshift/templates/postgres.json
+oc new-app openshift/templates/webapp.json -p SOURCE_REPOSITORY_URL=<your repository location>
+```
+
+The directory `openshift/templates/` contains OpenShift application templates 
+that you can add to your OpenShift project with:
 
     oc create -f openshift/templates/<TEMPLATE_NAME>.json
 
-The template `flask.json` contains just a minimal set of components to get your Flask application into OpenShift.
+After adding your templates, you can go to your OpenShift web console, 
+browse to your project and click the create button. Create a new app from 
+one of the templates that you have just added.
 
-The template `flask-postgresql.json` contains all of the components from `flask.json`, plus a PostgreSQL database service and an Image Stream for the Python base image. For simplicity, the PostgreSQL database in this template uses ephemeral storage and, therefore, is not production ready.
+Adjust the parameter values to suit your configuration. Most times you can just 
+accept the default values, however you will probably want to 
+set the `GIT_REPOSITORY` parameter to point to your fork and the `APP_DB_*` 
+parameters to match your database configuration.
 
-After adding your templates, you can go to your OpenShift web console, browse to your project and click the create button. Create a new app from one of the templates that you have just added.
 
-Adjust the parameter values to suit your configuration. Most times you can just accept the default values, however you will probably want to set the `GIT_REPOSITORY` parameter to point to your fork and the `APP_DB_*` parameters to match your database configuration.
+## Debugging Openshift
+    
+Your application will be built and deployed automatically. 
+If that doesn't happen, you can debug your build:
 
-Alternatively, you can use the command line to create your new app, assuming your OpenShift deployment has the default set of ImageStreams defined.  Instructions for installing the default ImageStreams are available [here](https://docs.openshift.org/latest/install_config/imagestreams_templates.html).  If you are defining the set of ImageStreams now, remember to pass in the proper cluster-admin credentials and to create the ImageStreams in the 'openshift' namespace:
-
-    oc new-app openshift/templates/flask.json -p SOURCE_REPOSITORY_URL=<your repository location>
-
-Your application will be built and deployed automatically. If that doesn't happen, you can debug your build:
-
-    oc get builds
-    # take build name from the command above
-    oc logs build/<build-name>
+```bash
+oc get builds
+# take build name from the command above
+oc logs build/<build-name>
+```
 
 And you can see information about your deployment too:
 
-    oc describe dc/flask-example
+    oc describe dc/webapp
 
-In the web console, the overview tab shows you a service, by default called "flask-example", that encapsulates all pods running your Flask application. You can access your application by browsing to the service's IP address and port.  You can determine these by running
+In the web console, the overview tab shows you a service, by 
+default called "flask-example", that encapsulates all pods running your 
+Flask application. You can access your application by browsing to the 
+service's IP address and port.  You can determine these by running
 
     oc get svc
 
@@ -115,8 +144,8 @@ Templates give you full control of each component of your application.
 Sometimes your application is simple enough and you don't want to bother with templates. In that case, you can let OpenShift inspect your source code and create the required components automatically for you:
 
 ```bash
-$ oc new-app centos/python-35-centos7~https://github.com/renefs/flask-ex
-imageStreams/python-35-centos7
+$ oc new-app centos/python-36-centos7~https://github.com/renefs/flask-ex
+imageStreams/python-36-centos7
 imageStreams/flask-ex
 buildConfigs/flask-ex
 deploymentConfigs/flask-ex
@@ -127,10 +156,10 @@ Service "flask-ex" created at 172.30.16.213 with port mappings 8080.
 
 You can access your application by browsing to the service's IP address and port.
 
-
 ## Logs
 
-By default your Flask application is served with gunicorn and configured to output its access log to stderr.
+By default your Flask application is served with gunicorn and 
+configured to output its access log to stderr.
 You can look at the combined stdout and stderr of a given pod with this command:
 
     oc get pods         # list all pods in your project
@@ -141,24 +170,39 @@ This can be useful to observe the correct functioning of your application.
 
 ## Special environment variables
 
+### APP_DEBUG
+
+Whether the application will run on debug mode or not.
+
 ### APP_CONFIG
 
-You can fine tune the gunicorn configuration through the environment variable `APP_CONFIG` that, when set, should point to a config file as documented [here](http://docs.gunicorn.org/en/latest/settings.html).
+You can fine tune the gunicorn configuration through the 
+environment variable `APP_CONFIG` that, when set, should point to a 
+config file as documented [here](http://docs.gunicorn.org/en/latest/settings.html).
 
 ### APP_SECRET_KEY
 
-When using one of the templates provided in this repository, this environment variable has its value automatically generated. For security purposes, make sure to set this to a random string as documented [here](https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-SECRET_KEY).
+When using one of the templates provided in this repository, this 
+environment variable has its value automatically generated. 
+For security purposes, make sure to set this to a random string as 
+documented [here](https://docs.djangoproject.com/en/1.8/ref/settings/#std:setting-SECRET_KEY).
 
+
+### FLASK_APP
+
+Will point to the wsgi.py file. It is needed to run Flask CLI commands.
 
 ## One-off command execution
 
-At times you might want to manually execute some command in the context of a running application in OpenShift.
+At times you might want to manually execute some command in the 
+context of a running application in OpenShift.
 
 You can do all that by using regular CLI commands from OpenShift.
 
 Here is how you would run a command in a pod specified by label:
 
-1. Inspect the output of the command below to find the name of a pod that matches a given label:
+1. Inspect the output of the command below to find the name of a 
+pod that matches a given label:
 
         oc get pods -l <your-label-selector>
 
@@ -178,20 +222,33 @@ Related GitHub issues:
 
 ## Data persistence
 
-You can deploy this application without a configured database in your OpenShift project, in which case Flask will use a temporary SQLite database that will live inside your application's container, and persist only until you redeploy your application.
+You can deploy this application without a configured database in 
+your OpenShift project, in which case Flask will use a temporary 
+SQLite database that will live inside your application's container, 
+and persist only until you redeploy your application.
 
-After each deploy you get a fresh, empty, SQLite database. That is fine for a first contact with OpenShift and perhaps Flask, but sooner or later you will want to persist your data across deployments.
+After each deploy you get a fresh, empty, SQLite database. 
+That is fine for a first contact with OpenShift and perhaps 
+Flask, but sooner or later you will want to persist your data across deployments.
 
-To do that, you should add a properly configured database server or ask your OpenShift administrator to add one for you. Then use `oc env` to update the `DATABASE_*` environment variables in your DeploymentConfig to match your database settings.
+To do that, you should add a properly configured database server or 
+ask your OpenShift administrator to add one for you. 
+Then use `oc env` to update the `DATABASE_*` environment variables in 
+your DeploymentConfig to match your database settings.
 
-Redeploy your application to have your changes applied, and open the welcome page again to make sure your application is successfully connected to the database server.
+Redeploy your application to have your changes applied, and open the 
+welcome page again to make sure your application is successfully 
+connected to the database server.
 
 
 ## Looking for help
 
-If you get stuck at some point, or think that this document needs further details or clarification, you can give feedback and look for help using the channels mentioned in [the OpenShift Origin repo](https://github.com/openshift/origin), or by filing an issue.
+If you get stuck at some point, or think that this document needs 
+further details or clarification, you can give feedback and look for 
+help using the channels mentioned in [the OpenShift Origin repo](https://github.com/openshift/origin), or by filing an issue.
 
 
 ## License
 
-This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
+This code is dedicated to the public domain to the maximum extent 
+permitted by applicable law, pursuant to [CC0](http://creativecommons.org/publicdomain/zero/1.0/).
