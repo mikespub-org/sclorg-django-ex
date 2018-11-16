@@ -1,11 +1,16 @@
+# Allows to subscribe to events and signals
 blinker==1.4
-gunicorn==19.4.5
-Flask==0.12.2
-Flask-Migrate==2.1.1
+# Used to serve the application
+gunicorn==19.9.0
+# Flask libs
+Flask==1.0.2
+Flask-Migrate==2.3.0
 Flask-SQLAlchemy==2.3.2
-psycopg2==2.7.3.1
-whitenoise==3.3.1
-
-Flask-Testing==0.6.2
-pytest==3.3.1
-pytest-cov==2.5.1
+Flask-Testing==0.7.1
+# PostgreSQL driver
+psycopg2==2.7.6.1
+# Used to serve static files using wsgi
+whitenoise==4.1.1
+# For testing
+pytest==4.0.0
+pytest-cov==2.6.0

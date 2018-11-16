@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_migrate import Migrate
+from whitenoise import WhiteNoise
 
 from app.extensions import db
 
@@ -17,6 +18,9 @@ def create_app(config_filename):
     app.config.from_object(config_filename)
 
     setup_db(app)
+
+    # add whitenoise
+    app.wsgi_app = WhiteNoise(app.wsgi_app, root='static/')
 
     @app.route("/")
     def hello():
