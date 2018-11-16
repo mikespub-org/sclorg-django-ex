@@ -51,7 +51,6 @@
             "targetPort": 8080
           }
         ],
-
         "selector": {
           "name": "${NAME}"
         }
@@ -216,12 +215,47 @@
                 },
                 "env": [
                   {
+                    "name": "APP_DEBUG",
+                    "value": "${APP_DEBUG}"
+                  },
+                  {
                     "name": "APP_DB_NAME",
-                    "value": "${APP_DB_NAME}"
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "${DB_APPLICATION}",
+                        "key": "database-name"
+                      }
+                    }
                   },
                   {
                     "name": "APP_DB_PORT",
-                    "value": "${APP_DB_PORT}"
+                    "value": "5432"
+                  },
+                  {
+                    "name": "APP_DB_SERVICE_NAME",
+                    "value": "${DB_APPLICATION}"
+                  },
+                  {
+                    "name": "APP_DB_ENGINE",
+                    "value": "${APP_DB_ENGINE}"
+                  },
+                  {
+                    "name": "APP_DB_USER",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "${DB_APPLICATION}",
+                        "key": "database-user"
+                      }
+                    }
+                  },
+                  {
+                    "name": "APP_DB_PASS",
+                    "valueFrom": {
+                      "secretKeyRef": {
+                        "name": "${DB_APPLICATION}",
+                        "key": "database-password"
+                      }
+                    }
                   },
                   {
                     "name": "SQLALCHEMY_POOL_SIZE",
@@ -242,36 +276,6 @@
                   {
                     "name": "SQLALCHEMY_MAX_OVERFLOW",
                     "value": "${APP_SQLALCHEMY_MAX_OVERFLOW}"
-                  },
-                  {
-                    "name": "APP_USE_PROXY",
-                    "value": "${APP_USE_PROXY}"
-                  },
-                  {
-                    "name": "APP_DB_SERVICE_NAME",
-                    "value": "${APP_DB_SERVICE_NAME}"
-                  },
-                  {
-                    "name": "APP_DB_ENGINE",
-                    "value": "${APP_DB_ENGINE}"
-                  },
-                  {
-                    "name": "APP_DB_USER",
-                    "valueFrom": {
-                      "secretKeyRef": {
-                        "name": "${NAME}",
-                        "key": "database-user"
-                      }
-                    }
-                  },
-                  {
-                    "name": "APP_DB_PASS",
-                    "valueFrom": {
-                      "secretKeyRef": {
-                        "name": "${NAME}",
-                        "key": "database-password"
-                      }
-                    }
                   },
                   {
                     "name": "APP_CONFIG",
@@ -303,21 +307,20 @@
       }
     }
   ],
-
   "parameters": [
     {
-      "name": "APP_DB_NAME",
+      "name": "APP_DEBUG",
       "displayName": "Debug",
-      "description": "Debug yes or no",
+      "description": "Enable or disable debug mode for the flask application",
       "required": true,
-      "value": "postgres"
+      "value": "false"
     },
     {
-      "name": "APP_DB_PORT",
-      "displayName": "Debug",
-      "description": "Database port",
+      "name": "DB_APPLICATION",
+      "displayName": "Database Application Name",
+      "description": "Name of the database application",
       "required": true,
-      "value": "5432"
+      "value": "postgresql"
     },
     {
       "name": "APP_SECRET_KEY",
@@ -355,13 +358,6 @@
       "value": "3"
     },
     {
-      "name": "APP_USE_PROXY",
-      "displayName": "Logs File",
-      "description": "If the app must use wsgi proxy",
-      "required": true,
-      "value": "true"
-    },
-    {
       "name": "NAME",
       "displayName": "Name",
       "description": "The name assigned to all of the frontend objects defined in this template.",
@@ -393,7 +389,7 @@
       "name": "SOURCE_REPOSITORY_REF",
       "displayName": "Git Reference",
       "description": "Set this to a branch name, tag or other ref of your repository if you are not using the default branch.",
-      "value": "dev"
+      "value": ""
     },
     {
       "name": "CONTEXT_DIR",
@@ -425,18 +421,6 @@
       "required": true,
       "description": "Database engine: postgresql, mysql or sqlite (default).",
       "value": "postgresql"
-    },
-    {
-      "name": "APP_DB_USER",
-      "displayName": "Database Username",
-      "generate": "expression",
-      "from": "[a-Z]{8}"
-    },
-    {
-      "name": "APP_DB_PASS",
-      "displayName": "Database User Password",
-      "generate": "expression",
-      "from": "[a-zA-Z0-9]{20}"
     },
     {
       "name": "APP_CONFIG",
