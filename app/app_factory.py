@@ -26,7 +26,7 @@ def create_app(config_filename):
 
 
 def setup_db(app):
-    if os.environ.get("APP_DB_ENGINE", None) == "postgresql":
+    if app.config.get("APP_DB_ENGINE", None) == "postgresql":
         app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://{0}:{1}@{2}:{3}/{4}'.format(
             app.config["DB_USER"],
             app.config["DB_PASSWORD"],
