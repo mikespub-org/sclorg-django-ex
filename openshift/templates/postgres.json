@@ -4,7 +4,7 @@
   "labels": {
     "template": "postgresql-persistent-template"
   },
-  "message": "The following service(s) have been created in your project: ${DATABASE_SERVICE_NAME}.\n\n       Username: ${POSTGRESQL_USER}\n       Password: ${POSTGRESQL_PASSWORD}\n  Database Name: ${POSTGRESQL_DATABASE}\n Connection URL: postgresql://${DATABASE_SERVICE_NAME}:5432/\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.",
+  "message": "The following service(s) have been created in your project: ${DATABASE_SERVICE_NAME}.\n\n       Username: ${POSTGRESQL_USER}\n       Password: ${POSTGRESQL_PASSWORD}\n  Database Name: ${DATABASE_NAME}\n Connection URL: postgresql://${DATABASE_SERVICE_NAME}:5432/\n\nFor more information about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.",
   "metadata": {
     "annotations": {
       "description": "PostgreSQL database service, with persistent storage. For more information about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.\n\nNOTE: Scaling to more than one replica is not supported. You must have persistent volumes available in your cluster to use this template.",
@@ -31,9 +31,9 @@
         "name": "${DATABASE_SERVICE_NAME}"
       },
       "stringData": {
-        "database-name": "${POSTGRESQL_DATABASE}",
-        "database-password": "${POSTGRESQL_PASSWORD}",
-        "database-user": "${POSTGRESQL_USER}"
+        "database-name": "${DATABASE_NAME}",
+        "database-password": "${DATABASE_PASSWORD}",
+        "database-user": "${DATABASE_USER}"
       }
     },
     {
@@ -246,7 +246,7 @@
       "displayName": "PostgreSQL Connection Username",
       "from": "user[A-Z0-9]{3}",
       "generate": "expression",
-      "name": "POSTGRESQL_USER",
+      "name": "DATABASE_USER",
       "required": true
     },
     {
@@ -254,13 +254,13 @@
       "displayName": "PostgreSQL Connection Password",
       "from": "[a-zA-Z0-9]{16}",
       "generate": "expression",
-      "name": "POSTGRESQL_PASSWORD",
+      "name": "DATABASE_PASSWORD",
       "required": true
     },
     {
       "description": "Name of the PostgreSQL database accessed.",
       "displayName": "PostgreSQL Database Name",
-      "name": "POSTGRESQL_DATABASE",
+      "name": "DATABASE_NAME",
       "required": true,
       "value": "sampledb"
     },
