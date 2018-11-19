@@ -95,10 +95,28 @@ oc cluster down
 The easiest way to run your application is from the command line with the 
 following commands:
 
+#### To create the PostgreSQL service
+
 ```bash
 oc new-app openshift/templates/postgres.json
-oc new-app openshift/templates/webapp.json -p SOURCE_REPOSITORY_URL=<your repository location>
 ```
+
+or specifying `DATABASE_USER`, `DATABASE_NAME` and `DATABASE_PASSWORD`
+
+```bash
+oc new-app openshift/templates/postgres.json \
+-p SOURCE_REPOSITORY_URL=<your repository location> \
+-p DATABASE_USER=<your_db_user> \
+-p DATABASE_NAME=<your_db_name> \
+-p DATABASE_PASSWORD=<your_db_password>
+```
+
+#### To create the Webapp service
+
+```bash
+oc new-app openshift/templates/webapp.json
+```
+
 
 The directory `openshift/templates/` contains OpenShift application templates 
 that you can add to your OpenShift project with:
