@@ -4,7 +4,27 @@ This is a [Flask](http://flask.pocoo.org/) project that you can use as the start
 
 The steps in this document assume that you have access to an OpenShift deployment that you can deploy applications on.
 
-## What has been done for you
+## Table of Contents
+
+1. [Description](#description)
+2. [Files in this repository](#files-in-this-repository)
+3. [Notes](#notes)
+4. [Development using Docker](#development-using-docker)
+5. [Testing](#testing)
+6. [Deployment](#deployment)
+    1. [Local Openshift Cluster](#local-openshift-cluster) 
+    2. [Remote Openshift Cluster](#remote-openshift-cluster)
+    3. [Deploying using application templates](#deploying-using-an-application-template)
+        4. [Create the PostgreSQL service](#create-the-postgresql-service)
+        5. [Create the Webapp service](#create-the-webapp-service)
+    4. [Without an application template](#without-an-application-template)
+7. [Debugging Openshift](#debugging-openshift)
+8. [Logs](#logs)
+9. [Special Environment Variables](#special-environment-variables)
+10. [One-off command execution](#one-off-command-execution)
+
+
+## Description
 
 This is a minimal Flask `1.0.2` project. It was created with these steps:
 
@@ -19,7 +39,7 @@ From this initial state you can:
 * update settings to suit your needs
 * install more Python libraries and add them to the `requirements.txt` file
 
-## Special files in this repository
+## Files in this repository
 
 Apart from the regular files  (`app/`, `wsgi.py`), this repository contains:
 
@@ -41,9 +61,9 @@ web-variables.env.sample    - Application sample configuration
 `[container]` was added to the commands that need to be run inside a container.
 If it is not specified, by default it will be on the local machine.
 
-## Local development
+## Development using Docker
 
-To develop locally this project it is reyou can use `Docker` and `Docker Compose`
+To develop locally this project you can use `Docker` and `Docker Compose`
 
 1. Fork this repo and clone your fork:
 
@@ -68,12 +88,15 @@ docker-compose run web bash
 [container] pytest
 ```
 
-## Deploying to OpenShift
+## Deployment
 
-To follow the next steps, you need to be logged in to an OpenShift
- cluster and have an OpenShift project where you can work on.
+To follow the next steps, you need to be logged in to an OpenShift cluster and
+ to have an OpenShift project where you can work on.
 
 ### Local Openshift cluster
+
+Sometimes it is recommended to test a deployment on a local Openshift cluster first, 
+as it won't affect your production infraestructure and it will be faster.
 
 You can have your own Openshift cluster running locally for testing purposes 
 with the following command:
@@ -82,7 +105,8 @@ with the following command:
 oc cluster up
 ```
 
-Once up, follow the instructions on the screen to access the console and login.
+Once up, follow the instructions on the screen to access the console and login like 
+in a remote cluster.
 
 You can shutdown the cluster running:
 
@@ -90,12 +114,21 @@ You can shutdown the cluster running:
 oc cluster down
 ```
 
-### Using an application template
+### Remote Openshift Cluster
 
-The easiest way to run your application is from the command line with the 
-following commands:
+You can directly login on your cluster with the following command:
 
-#### To create the PostgreSQL service
+```bash
+oc login <your_cluster_url>
+```
+
+
+### Deploying using an application template
+
+Once you are logged in your cluster, the easiest way to run your application is 
+from the command line with the following commands:
+
+#### Create the PostgreSQL service
 
 ```bash
 oc new-app openshift/templates/postgres.json
@@ -111,7 +144,7 @@ oc new-app openshift/templates/postgres.json \
 -p DATABASE_PASSWORD=<your_db_password>
 ```
 
-#### To create the Webapp service
+#### Create the Webapp service
 
 ```bash
 oc new-app openshift/templates/webapp.json
@@ -131,6 +164,25 @@ Adjust the parameter values to suit your configuration. Most times you can just
 accept the default values, however you will probably want to 
 set the `GIT_REPOSITORY` parameter to point to your fork and the `APP_DB_*` 
 parameters to match your database configuration.
+
+
+### Without an application template
+
+Templates give you full control of each component of your application.
+Sometimes your application is simple enough and you don't want to bother with templates. In that case, you can let OpenShift inspect your source code and create the required components automatically for you:
+
+```bash
+$ oc new-app centos/python-36-centos7~https://github.com/renefs/flask-ex
+imageStreams/python-36-centos7
+imageStreams/flask-ex
+buildConfigs/flask-ex
+deploymentConfigs/flask-ex
+services/flask-ex
+A build was created - you can run `oc start-build flask-ex` to start it.
+Service "flask-ex" created at 172.30.16.213 with port mappings 8080.
+```
+
+You can access your application by browsing to the service's IP address and port.
 
 
 ## Debugging Openshift
@@ -154,25 +206,6 @@ Flask application. You can access your application by browsing to the
 service's IP address and port.  You can determine these by running
 
     oc get svc
-
-
-### Without an application template
-
-Templates give you full control of each component of your application.
-Sometimes your application is simple enough and you don't want to bother with templates. In that case, you can let OpenShift inspect your source code and create the required components automatically for you:
-
-```bash
-$ oc new-app centos/python-36-centos7~https://github.com/renefs/flask-ex
-imageStreams/python-36-centos7
-imageStreams/flask-ex
-buildConfigs/flask-ex
-deploymentConfigs/flask-ex
-services/flask-ex
-A build was created - you can run `oc start-build flask-ex` to start it.
-Service "flask-ex" created at 172.30.16.213 with port mappings 8080.
-```
-
-You can access your application by browsing to the service's IP address and port.
 
 ## Logs
 
