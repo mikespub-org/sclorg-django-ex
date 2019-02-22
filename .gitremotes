@@ -1,0 +1,15 @@
+[remote "origin"]
+	url = https://github.com/mikespub-org/sclorg-django-ex.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[remote "upstream"]
+	url = https://github.com/sclorg/django-ex.git
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+[remote "renefs"]
+	url = https://github.com/renefs/flask-ex.git
+	fetch = +refs/heads/master:refs/remotes/renefs/master
+[branch "flask-ex"]
+	remote = renefs
+	merge = refs/heads/master
