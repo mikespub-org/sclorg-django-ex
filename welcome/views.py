@@ -9,11 +9,13 @@ from .models import PageView
 # Create your views here.
 
 def index(request):
-    hostname = os.getenv('HOSTNAME', 'unknown')
+    hostname = os.getenv('HOSTNAME', request.get_host())
     PageView.objects.create(hostname=hostname)
 
     return render(request, 'welcome/index.html', {
         'hostname': hostname,
+        'meta': request.META,
+        'site': request.site,
         'database': database.info(),
         'count': PageView.objects.count()
     })
