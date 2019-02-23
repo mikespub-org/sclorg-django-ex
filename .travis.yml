@@ -5,6 +5,8 @@ language: python
 #  directories:
 #  - "$HOME/.cache/pip"
 #  - "$HOME/.pyenv"
+services:
+  - docker
 python:
   #- "2.7"
   - "3.6"
@@ -19,3 +21,6 @@ branches:
 # command to run tests
 script:
   - pytest
+  - docker build -t mikespub-org/sclorg-flask-ex .
+  - docker images
+  - docker image prune -f
