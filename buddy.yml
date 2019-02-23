@@ -1,0 +1,23 @@
+- pipeline: "Build, Test & Deploy"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: "flask-ex"
+  ref_type: "BRANCH"
+  trigger_condition: "ALWAYS"
+  actions:
+  - action: "Execute: pytest"
+    type: "BUILD"
+    working_directory: "/buddy/sclorg-django-ex"
+    docker_image_name: "library/python"
+    docker_image_tag: "3.5"
+    execute_commands:
+    - "pip install -r requirements.txt"
+    - "pytest"
+    cached_dirs:
+    - "/root/.cache/pip"
+    mount_filesystem_path: "/buddy/sclorg-django-ex"
+    shell: "BASH"
+    trigger_condition: "ALWAYS"
+  - action: "Build Docker image"
+    type: "DOCKERFILE"
+    dockerfile_path: "Dockerfile"
+    trigger_condition: "ALWAYS"
