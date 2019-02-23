@@ -6,8 +6,8 @@ language: python
 #  - "$HOME/.cache/pip"
 #  - "$HOME/.pyenv"
 python:
-  - "2.7"
-  #- "3.6"
+  #- "2.7"
+  - "3.6"
   - "3.7"
 branches:
   only:
