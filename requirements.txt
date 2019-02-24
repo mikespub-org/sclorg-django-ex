@@ -11,7 +11,7 @@ Flask-Testing==0.7.1
 # PostgreSQL driver
 psycopg2==2.7.6.1
 # Used to serve static files using wsgi
-whitenoise==4.1.1
+whitenoise==4.1.2
 # For testing
 pytest==4.0.0
 pytest-cov==2.6.1
