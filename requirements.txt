@@ -6,7 +6,7 @@ gunicorn==19.9.0
 Flask==1.0.2
 Flask-Env==2.0.0
 Flask-Migrate==2.4.0
-Flask-SQLAlchemy==2.3.2
+Flask-SQLAlchemy==2.4.0
 Flask-Testing==0.7.1
 # PostgreSQL driver
 psycopg2==2.7.7
