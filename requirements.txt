@@ -3,7 +3,7 @@ blinker==1.4
 # Used to serve the application
 gunicorn==19.9.0
 # Flask libs
-Flask==1.0.3
+Flask==1.1.0
 Flask-Env==2.0.0
 Flask-Migrate==2.5.2
 Flask-SQLAlchemy==2.4.0
