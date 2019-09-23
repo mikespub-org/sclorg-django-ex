@@ -1,0 +1,6 @@
+[remote "flask-ex"]
+	url = https://github.com/renefs/flask-ex.git
+	fetch = +refs/heads/*:refs/remotes/flask-ex/*
+[remote "django-ex"]
+	url = https://github.com/sclorg/django-ex.git
+	fetch = +refs/heads/*:refs/remotes/django-ex/*
