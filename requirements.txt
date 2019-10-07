@@ -14,4 +14,4 @@ Flask-Testing==0.7.1
 whitenoise==4.1.4
 # For testing
 pytest==5.2.0
-pytest-cov==2.7.1
+pytest-cov==2.8.1
