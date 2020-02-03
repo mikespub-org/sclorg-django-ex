@@ -13,5 +13,5 @@ Flask-Testing==0.7.1
 # Used to serve static files using wsgi
 whitenoise==5.0.1
 # For testing
-pytest==5.3.4
+pytest==5.3.5
 pytest-cov==2.8.1
