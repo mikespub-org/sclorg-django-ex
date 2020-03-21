@@ -5,13 +5,13 @@ gunicorn==20.0.4
 # Flask libs
 Flask==1.1.1
 Flask-Env==2.0.0
-Flask-Migrate==2.5.2
+Flask-Migrate==2.5.3
 Flask-SQLAlchemy==2.4.1
-Flask-Testing==0.7.1
+Flask-Testing==0.8.0
 # PostgreSQL driver
 #psycopg2==2.8.3
 # Used to serve static files using wsgi
 whitenoise==5.0.1
 # For testing
-pytest==5.3.4
+pytest==5.4.1
 pytest-cov==2.8.1
