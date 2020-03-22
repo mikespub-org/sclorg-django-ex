@@ -2,7 +2,8 @@ import os
 from flask import Flask
 from flask_migrate import Migrate
 from whitenoise import WhiteNoise
-from werkzeug.contrib.fixers import ProxyFix
+# from werkzeug.contrib.fixers import ProxyFix
+from  werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.extensions import db
 
