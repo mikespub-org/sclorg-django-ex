@@ -6,3 +6,17 @@ updates:
     interval: weekly
   open-pull-requests-limit: 10
   target-branch: flask-ex
+
+- package-ecosystem: "docker" # See documentation for possible values
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  target-branch: flask-ex
+
+- package-ecosystem: "github-actions" # See documentation for possible values
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  target-branch: flask-ex
