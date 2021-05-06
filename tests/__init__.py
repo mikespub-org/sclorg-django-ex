@@ -12,13 +12,14 @@ def create_test_app():
 
     config = FileConfiguration(config_test)
     application = create_app(config)
-    application.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///' + os.path.join(_basedir, 'test_app.db')
+    application.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(
+        _basedir, "test_app.db"
+    )
 
     return application
 
 
 class BaseTestCase(TestCase):
-
     def create_app(self):
         return create_test_app()
 
@@ -29,6 +30,6 @@ class BaseTestCase(TestCase):
         db.session.remove()
         db.drop_all()
         try:
-            os.remove(os.path.join(_basedir, 'test_app.db'))
+            os.remove(os.path.join(_basedir, "test_app.db"))
         except OSError:
             pass
