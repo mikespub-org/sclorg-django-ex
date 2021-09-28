@@ -27,11 +27,11 @@ def create_app(config_filename):
     # add whitenoise for static files
     app.wsgi_app = WhiteNoise(app.wsgi_app, root="app/static/")
 
-    print("Creating a Flask app with DEBUG: {}".format(app.debug))
+    print(f"Creating a Flask app with DEBUG: {app.debug}")
 
     @app.route("/")
     def hello():
-        return "Hello World!: DEBUG: {} Environment: {}".format(app.debug, app.env)
+        return f"Hello World!: DEBUG: {app.debug} Environment: {app.env}"
 
     return app
 
@@ -47,7 +47,7 @@ def setup_db(app):
         print("Setting up PostgreSQL database")
         app.config[
             "SQLALCHEMY_DATABASE_URI"
-        ] = "postgresql://{0}:{1}@{2}:{3}/{4}".format(
+        ] = "postgresql://{}:{}@{}:{}/{}".format(
             app.config["DB_USER"],
             app.config["DB_PASS"],
             app.config["DB_SERVICE_NAME"],
