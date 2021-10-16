@@ -11,4 +11,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2.3.4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag mikespub-org/sclorg-flask-ex:$(date +%s)
+      run: docker build . --file Dockerfile --tag mikespuborg/sclorg-flask-ex:$(date +%s)
