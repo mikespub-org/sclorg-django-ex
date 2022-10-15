@@ -1,0 +1,20 @@
+app_config: /opt/app-root/src/conf/reload.py
+app_db_engine: postgresql
+app_db_service_name: postgresql
+app_debug: "false"
+app_secret_key: '# TODO: must define a default value for .app_secret_key'
+app_sqlalchemy_max_overflow: "3"
+app_sqlalchemy_pool_recycle: "120"
+app_sqlalchemy_pool_size: "5"
+app_sqlalchemy_pool_timeout: "10"
+application_domain: '# TODO: must define a default value for .application_domain'
+context_dir: '# TODO: must define a default value for .context_dir'
+db_application: postgresql
+flask_app: /opt/app-root/src/wsgi.py
+github_webhook_secret: '# TODO: must define a default value for .github_webhook_secret'
+memory_limit: 512Mi
+name: webapp
+namespace: openshift
+pip_index_url: '# TODO: must define a default value for .pip_index_url'
+source_repository_ref: '# TODO: must define a default value for .source_repository_ref'
+source_repository_url: https://github.com/renefs/flask-ex.git

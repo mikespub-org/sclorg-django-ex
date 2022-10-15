@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    description: Defines how to deploy the application server
+    template.alpha.openshift.io/wait-for-ready: "true"
+  labels:
+    app: webapp
+    template: webapp
+  name: {{ .Values.name }}
+spec:
+  replicas: 1
+  selector:
+    name: {{ .Values.name }}
+  strategy:
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.name }}
+      name: {{ .Values.name }}
+    spec:
+      containers:
+      - env:
+        - name: APP_DEBUG
+          value: {{ .Values.app_debug }}
+        - name: APP_DB_NAME
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: {{ .Values.db_application }}
+        - name: APP_DB_PORT
+          value: "5432"
+        - name: APP_DB_SERVICE_NAME
+          value: {{ .Values.db_application }}
+        - name: APP_DB_ENGINE
+          value: {{ .Values.app_db_engine }}
+        - name: APP_DB_USER
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: {{ .Values.db_application }}
+        - name: APP_DB_PASS
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: {{ .Values.db_application }}
+        - name: SQLALCHEMY_POOL_SIZE
+          value: {{ .Values.app_sqlalchemy_pool_size }}
+        - name: SQLALCHEMY_POOL_TIMEOUT
+          value: {{ .Values.app_sqlalchemy_pool_timeout }}
+        - name: SQLALCHEMY_POOL_RECYCLE
+          value: {{ .Values.app_sqlalchemy_pool_recycle }}
+        - name: SQLALCHEMY_MAX_OVERFLOW
+          value: {{ .Values.app_sqlalchemy_max_overflow }}
+        - name: SQLALCHEMY_MAX_OVERFLOW
+          value: {{ .Values.app_sqlalchemy_max_overflow }}
+        - name: APP_CONFIG
+          value: {{ .Values.app_config }}
+        - name: APP_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: app-secret-key
+              name: {{ .Values.name }}
+        - name: FLASK_APP
+          value: {{ .Values.flask_app }}
+        image: ' '
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 3
+        name: webapp
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 3
+          timeoutSeconds: 3
+        resources:
+          limits:
+            memory: {{ .Values.memory_limit }}
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - webapp
+      from:
+        kind: ImageStreamTag
+        name: {{ .Values.name }}:latest
+    type: ImageChange
+  - type: ConfigChange

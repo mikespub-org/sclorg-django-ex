@@ -1,0 +1,5 @@
+description: Flask application with a PostgreSQL database. For more information about
+  using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.
+name: webapp
+tags: quickstart,python,flask
+version: v0.0.1
