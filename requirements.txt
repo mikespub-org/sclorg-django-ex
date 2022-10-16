@@ -9,7 +9,7 @@ Flask-Migrate==3.1.0
 Flask-SQLAlchemy==3.0.2
 Flask-Testing==0.8.1
 # PostgreSQL driver
-#psycopg2==2.9.3
+psycopg2==2.9.4
 # Used to serve static files using wsgi
 whitenoise==6.2.0
 # For testing
