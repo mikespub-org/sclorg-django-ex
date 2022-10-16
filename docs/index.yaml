@@ -1,27 +1,27 @@
 apiVersion: v1
 entries:
   postgresql-persistent:
-  - apiVersion: v1
-    created: "2022-10-16T09:56:41.667588118Z"
+  - apiVersion: v2
+    created: "2022-10-16T15:36:39.653004086Z"
     description: 'PostgreSQL database service, with persistent storage. For more information
       about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.  NOTE:
       Scaling to more than one replica is not supported. You must have persistent
       volumes available in your cluster to use this template.'
-    digest: 045cb91805ccb00e51052b280e15d426d318d94637306cc6ed52c416f3433a13
+    digest: abc4aee4547c40d155cb27979ee98934b544153c6bc8d6c1f142508003dda5fc
     name: postgresql-persistent
     tags: database,postgresql
     urls:
     - https://github-org.mikespub.net/sclorg-django-ex/charts/postgresql-persistent-v0.0.1.tgz
     version: v0.0.1
   webapp:
-  - apiVersion: v1
-    created: "2022-10-16T09:56:41.668117115Z"
+  - apiVersion: v2
+    created: "2022-10-16T15:36:39.654301476Z"
     description: Flask application with a PostgreSQL database. For more information
-      about using this template, including OpenShift considerations, see https://github.com/openshift/django-ex/blob/master/README.md.
-    digest: e8ee2ae25fe473d63d4f1df1ca03f7fe20ff23bea4c12ec5c33d714e8b97487a
+      about using this template, including OpenShift considerations, see https://github.com/mikespub-org/sclorg-django-ex.
+    digest: 6392614c4e8732cd36824564d8cf51a6e0b5eda6f77d689db82043af88234a02
     name: webapp
     tags: quickstart,python,flask
     urls:
     - https://github-org.mikespub.net/sclorg-django-ex/charts/webapp-v0.0.1.tgz
     version: v0.0.1
-generated: "2022-10-16T09:56:41.666804222Z"
+generated: "2022-10-16T15:36:39.652312592Z"

@@ -4,5 +4,5 @@ database_service_name: postgresql
 database_user: '# TODO: must define a default value for .database_user'
 memory_limit: 512Mi
 namespace: openshift
-postgresql_version: "9.6"
+postgresql_version: 12-el8
 volume_capacity: 1Gi

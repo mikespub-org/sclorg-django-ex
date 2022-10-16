@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   annotations:
@@ -28,7 +28,7 @@ spec:
         value: {{ .Values.pip_index_url }}
       from:
         kind: ImageStreamTag
-        name: python:3.6
+        name: python:{{ .Values.python_version }}
         namespace: {{ .Values.namespace }}
     type: Source
   triggers:

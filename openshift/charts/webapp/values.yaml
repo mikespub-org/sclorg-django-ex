@@ -16,5 +16,6 @@ memory_limit: 512Mi
 name: webapp
 namespace: openshift
 pip_index_url: '# TODO: must define a default value for .pip_index_url'
-source_repository_ref: '# TODO: must define a default value for .source_repository_ref'
-source_repository_url: https://github.com/renefs/flask-ex.git
+python_version: 3.9-ubi8
+source_repository_ref: flask-ex
+source_repository_url: https://github.com/mikespub-org/sclorg-django-ex.git
