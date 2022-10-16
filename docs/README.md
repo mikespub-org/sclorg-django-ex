@@ -1,5 +1,5 @@
-# Red Hat Helm Charts
-This repository contains the charts are populated out-of-the-box in the OpenShift Developer Catalog
+# Mike's Pub Helm Charts
+This repository contains the helm charts for the Flask version of sclorg/django-ex in the OpenShift Developer Catalog
 
 The repository has been configured to serve the static helm index and chart files
 
@@ -7,19 +7,26 @@ The repository has been configured to serve the static helm index and chart file
 
 ```
 
-$ helm repo add redhat-charts https://redhat-developer.github.io/redhat-helm-charts
-"redhat-charts" has been added to your repositories
+$ helm repo add mikespub-charts https://github-org.mikespub.net/sclorg-django-ex/
+"mikespub-charts" has been added to your repositories
 
 $ helm repo list 
 NAME           	URL                               
-redhat-charts	https://redhat-developer.github.io/redhat-helm-charts  
+mikespub-charts	https://github-org.mikespub.net/sclorg-django-ex/
 
 ```
 
 
 ## Helm index
 
-https://redhat-developer.github.io/redhat-helm-charts/index.yaml
+https://github-org.mikespub.net/sclorg-django-ex/index.yaml
  
 
+## Source repository
+
+https://github.com/mikespub-org/sclorg-django-ex
+
+
 ## [How To Submit a New Chart](https://github.com/redhat-developer/redhat-helm-charts/wiki/Adding-a-New-Chart)
+
+Source: https://github.com/redhat-developer/redhat-helm-charts
