@@ -1,0 +1,44 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: robot-template
+metadata:
+  annotations:
+    description: Template to create '${NAME}' service account with token secret and grant RBAC '${ROLE}' role for automation
+  name: robot-template
+objects:
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    name: ${NAME}
+  secrets:
+    - name: sa-token-${NAME}
+- apiVersion: v1
+  kind: Secret
+  metadata:
+    name: sa-token-${NAME}
+    annotations:
+      kubernetes.io/service-account.name: "${NAME}" 
+  type: kubernetes.io/service-account-token
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: "${NAME}-${ROLE}"
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: ${ROLE}
+  subjects:
+    - kind: ServiceAccount
+      name: ${NAME}
+parameters:
+- description: The name of the service account defined in this template.
+  displayName: Name
+  name: NAME
+  required: true
+  value: robot
+- description: The RBAC role granted to the service account defined in this template.
+  displayName: Role
+  name: ROLE
+  required: true
+  value: edit

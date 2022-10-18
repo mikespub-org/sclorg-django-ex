@@ -1,0 +1,6 @@
+apiVersion: v2
+description: Flask application with a PostgreSQL database. For more information about
+  using this template, including OpenShift considerations, see https://github.com/mikespub-org/sclorg-django-ex.
+name: webapp
+tags: quickstart,python,flask
+version: v0.0.1

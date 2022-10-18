@@ -1,0 +1,5 @@
+apiVersion: v2
+description: Template to create '${NAME}' service account with token secret and grant
+  RBAC '${ROLE}' role for automation
+name: robot-template
+version: v0.0.1
