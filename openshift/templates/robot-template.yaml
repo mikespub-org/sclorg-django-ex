@@ -31,6 +31,7 @@ objects:
   subjects:
     - kind: ServiceAccount
       name: ${NAME}
+      namespace: ${NAMESPACE}
 parameters:
 - description: The name of the service account defined in this template.
   displayName: Name
@@ -42,3 +43,6 @@ parameters:
   name: ROLE
   required: true
   value: edit
+- description: The namespace for the service account defined in this template.
+  displayName: Namespace
+  name: NAMESPACE
