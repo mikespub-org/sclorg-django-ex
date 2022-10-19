@@ -14,6 +14,27 @@ $ helm repo list
 NAME           	URL                               
 mikespub-charts	https://github-org.mikespub.net/sclorg-django-ex/
 
+$ helm search repo mikespub-charts
+NAME                                 	CHART VERSION	APP VERSION	DESCRIPTION
+mikespub-charts/postgresql-persistent	v0.0.1       	           	PostgreSQL database service, with persistent st...
+mikespub-charts/robot-template       	v0.0.1       	           	Template to create '${NAME}' service account wi...
+mikespub-charts/webapp               	v0.0.1       	           	Flask application with a PostgreSQL database. F...
+
+$ helm show values mikespub-charts/webapp | grep TODO > webapp-values.yaml
+$ vi webapp-values.yaml
+...
+$ helm install -f webapp-values.yaml webapp-release mikespub-charts/webapp
+...
+
+$ helm list
+NAME       	NAMESPACE   	REVISION	UPDATED                                	STATUS  	CHART        	APP VERSION
+...
+$ helm get all webapp-release
+NAME: webapp-release
+...
+
+$ helm uninstall webapp-release
+...
 ```
 
 

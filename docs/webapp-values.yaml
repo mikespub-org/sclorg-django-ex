@@ -1,0 +1,6 @@
+app_secret_key: my_app_secret_key
+application_domain: ""
+context_dir: ""
+github_webhook_secret: my_github_webhook_secret
+pip_index_url: ""
+name: my-webapp

@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   postgresql-persistent:
   - apiVersion: v2
-    created: "2022-10-18T14:27:25.343499326Z"
+    created: "2022-10-19T16:55:48.13290715Z"
     description: 'PostgreSQL database service, with persistent storage. For more information
       about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.  NOTE:
       Scaling to more than one replica is not supported. You must have persistent
@@ -15,17 +15,17 @@ entries:
     version: v0.0.1
   robot-template:
   - apiVersion: v2
-    created: "2022-10-18T14:27:25.343702625Z"
+    created: "2022-10-19T16:55:48.133134648Z"
     description: Template to create '${NAME}' service account with token secret and
       grant RBAC '${ROLE}' role for automation
-    digest: 0792be77af82217ef0ed2d82c5346db32dab8b24f99a59ddd59719b264396261
+    digest: 76ea088ae5e894a16fdbf18056b9cc2d8c04b3fce502feba069c01041f7944ff
     name: robot-template
     urls:
     - https://github-org.mikespub.net/sclorg-django-ex/charts/robot-template-v0.0.1.tgz
     version: v0.0.1
   webapp:
   - apiVersion: v2
-    created: "2022-10-18T14:27:25.344618119Z"
+    created: "2022-10-19T16:55:48.134531737Z"
     description: Flask application with a PostgreSQL database. For more information
       about using this template, including OpenShift considerations, see https://github.com/mikespub-org/sclorg-django-ex.
     digest: 5578c479a52b9f451ab48f2dbe3cf5d5f07e64c26b02b6d4b28cd21002e971ca
@@ -34,4 +34,4 @@ entries:
     urls:
     - https://github-org.mikespub.net/sclorg-django-ex/charts/webapp-v0.0.1.tgz
     version: v0.0.1
-generated: "2022-10-18T14:27:25.34293673Z"
+generated: "2022-10-19T16:55:48.13172876Z"
