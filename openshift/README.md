@@ -52,15 +52,15 @@ $ ...
 3. Convert docker-compose file to Helm charts
 
 ```
-$ kompose convert -c -o openshift/charts/kompose
-INFO Kubernetes file "openshift/charts/kompose/templates/postgresql-service.yaml" created
-INFO Kubernetes file "openshift/charts/kompose/templates/web-service.yaml" created
-INFO Kubernetes file "openshift/charts/kompose/templates/postgresql-deployment.yaml" created
-INFO Kubernetes file "openshift/charts/kompose/templates/postgresql-claim0-persistentvolumeclaim.yaml" created
-INFO Kubernetes file "openshift/charts/kompose/templates/web-deployment.yaml" created
-INFO Kubernetes file "openshift/charts/kompose/templates/web-variables-env-configmap.yaml" created
-INFO Kubernetes file "openshift/charts/kompose/templates/web-ingress.yaml" created
-INFO chart created in "openshift/charts/kompose/"
-$ helm install flask-ex-helm openshift/charts/kompose
+$ kompose convert -c -o web-postgresql-kompose
+INFO Kubernetes file "web-postgresql-kompose/templates/postgresql-service.yaml" created
+INFO Kubernetes file "web-postgresql-kompose/templates/web-service.yaml" created
+INFO Kubernetes file "web-postgresql-kompose/templates/postgresql-deployment.yaml" created
+INFO Kubernetes file "web-postgresql-kompose/templates/postgresql-claim0-persistentvolumeclaim.yaml" created
+INFO Kubernetes file "web-postgresql-kompose/templates/web-deployment.yaml" created
+INFO Kubernetes file "web-postgresql-kompose/templates/web-variables-env-configmap.yaml" created
+INFO Kubernetes file "web-postgresql-kompose/templates/web-ingress.yaml" created
+INFO chart created in "web-postgresql-kompose/"
+$ helm install flask-ex-helm web-postgresql-kompose
 ```
 
