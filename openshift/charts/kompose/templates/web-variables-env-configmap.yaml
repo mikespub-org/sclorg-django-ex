@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  APP_DB_ENGINE: postgresql
+  APP_DB_NAME: postgres
+  APP_DB_PASS: postgres
+  APP_DB_PORT: "5432"
+  APP_DB_SERVICE_NAME: postgresql
+  APP_DB_USER: postgres
+  APP_DEBUG: "true"
+  APP_SECRET_KEY: \xd2\xb79\xa9s\x81\x01\xe9\xa7g\xe9I\xda2\xb7\xbbu\x17\xe6\x82\xd1\xbcs\x99
+  APPLICATION_DOMAIN: flask-ex.mikespub.net
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-web-variables-env
+  name: web-variables-env

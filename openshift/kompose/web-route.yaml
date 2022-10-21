@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web
+  name: web
+spec:
+  host: flask-ex
+  port:
+    targetPort: 8080
+  to:
+    kind: Service
+    name: web
+    weight: null
+status: {}
