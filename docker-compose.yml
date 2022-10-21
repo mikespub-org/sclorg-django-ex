@@ -2,6 +2,7 @@ version: '3'
 services:
   web:
     build: .
+    image: "mikespub/sclorg-django-ex_web"
     depends_on:
     - postgresql
     env_file:
@@ -11,12 +12,14 @@ services:
     working_dir: /opt/app-root/src
     ports:
     - 8080:8080
-    volumes:
-    - ./app/:/opt/app-root/src/app
-    - ./tests/:/opt/app-root/src/tests
-    - ./migrations/:/opt/app-root/src/migrations
-    - ./wsgi.py/:/opt/app-root/src/wsgi.py
-    command: flask run -h 0.0.0.0 -p 8080
+    # volumes:
+    # - ./app/:/opt/app-root/src/app
+    # - ./tests/:/opt/app-root/src/tests
+    # - ./migrations/:/opt/app-root/src/migrations
+    # - ./wsgi.py:/opt/app-root/src/wsgi.py
+    # command: flask run -h 0.0.0.0 -p 8080
+    labels:
+      kompose.service.expose: "${APPLICATION_DOMAIN:-flask-ex}"
 
   postgresql:
     image: "postgres:14-alpine"
