@@ -22,7 +22,7 @@ services:
       kompose.service.expose: "${APPLICATION_DOMAIN:-flask-ex}"
 
   postgresql:
-    image: "postgres:14-alpine"
+    image: "postgres:15-alpine"
     volumes:
     - /var/lib/postgresql
     environment:

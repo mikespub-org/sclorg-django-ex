@@ -46,7 +46,7 @@ spec:
           - postgresql
         from:
           kind: ImageStreamTag
-          name: postgresql:14-alpine
+          name: postgresql:15-alpine
       type: ImageChange
 status:
   availableReplicas: 0

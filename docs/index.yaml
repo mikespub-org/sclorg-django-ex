@@ -2,7 +2,7 @@ apiVersion: v1
 entries:
   postgresql-persistent:
   - apiVersion: v2
-    created: "2022-10-22T09:08:42.397229308Z"
+    created: "2022-11-16T20:08:20.663470459Z"
     description: 'PostgreSQL database service, with persistent storage. For more information
       about using this template, including OpenShift considerations, see https://github.com/sclorg/postgresql-container/.  NOTE:
       Scaling to more than one replica is not supported. You must have persistent
@@ -15,7 +15,7 @@ entries:
     version: v0.0.1
   quickstart-python:
   - apiVersion: v1
-    created: "2022-10-22T09:08:42.398119603Z"
+    created: "2022-11-16T20:08:20.663706258Z"
     description: A generated Helm Chart for quickstart-python from Skippbox Kompose
     digest: 56aa310415382563e18c6b6b205c1b26c85ada21947026bbf3e39cfc76aede49
     keywords:
@@ -26,7 +26,7 @@ entries:
     version: 0.0.1
   robot-template:
   - apiVersion: v2
-    created: "2022-10-22T09:08:42.398825798Z"
+    created: "2022-11-16T20:08:20.663897557Z"
     description: Template to create '${NAME}' service account with token secret and
       grant RBAC '${ROLE}' role for automation
     digest: 76ea088ae5e894a16fdbf18056b9cc2d8c04b3fce502feba069c01041f7944ff
@@ -36,9 +36,9 @@ entries:
     version: v0.0.1
   web-postgresql-kompose:
   - apiVersion: v1
-    created: "2022-10-22T09:08:42.399714093Z"
+    created: "2022-11-16T20:08:20.664217356Z"
     description: A generated Helm Chart for web-postgresql-kompose from Skippbox Kompose
-    digest: c5411d403a0a49e0617fe7b46d6b72ab85722df2a87226579882cd6ad92ba989
+    digest: c2833fea168a6a2cc7fd1b3f1fa0539f88a9a01ae7e09be8aba474f5408e72ce
     keywords:
     - web-postgresql-kompose
     name: web-postgresql-kompose
@@ -47,7 +47,7 @@ entries:
     version: 0.0.1
   webapp:
   - apiVersion: v2
-    created: "2022-10-22T09:08:42.401426783Z"
+    created: "2022-11-16T20:08:20.664733255Z"
     description: Flask application with a PostgreSQL database. For more information
       about using this template, including OpenShift considerations, see https://github.com/mikespub-org/sclorg-django-ex.
     digest: 5578c479a52b9f451ab48f2dbe3cf5d5f07e64c26b02b6d4b28cd21002e971ca
@@ -56,4 +56,4 @@ entries:
     urls:
     - https://github-org.mikespub.net/sclorg-django-ex/charts/webapp-v0.0.1.tgz
     version: v0.0.1
-generated: "2022-10-22T09:08:42.396064815Z"
+generated: "2022-11-16T20:08:20.66299456Z"
