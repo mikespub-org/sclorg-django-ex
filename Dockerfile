@@ -12,6 +12,7 @@ ADD app/ /opt/app-root/src/app
 ADD tests/ /opt/app-root/src/tests
 ADD migrations/ /opt/app-root/src/migrations
 ADD wsgi.py /opt/app-root/src/wsgi.py
+ADD conf/ /opt/app-root/src/conf
 
 RUN pip install -r requirements.txt
 
