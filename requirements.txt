@@ -3,7 +3,7 @@ blinker==1.5
 # Used to serve the application
 gunicorn==20.1.0
 # Flask libs
-Flask==2.2.2
+Flask==2.2.3
 Flask-Env==2.0.0
 Flask-Migrate==4.0.4
 Flask-SQLAlchemy==3.0.3
@@ -11,7 +11,7 @@ Flask-Testing==0.8.1
 # PostgreSQL driver
 psycopg2-binary==2.9.5
 # Used to serve static files using wsgi
-whitenoise==6.3.0
+whitenoise==6.4.0
 # For testing
 pytest==7.2.1
 pytest-cov==4.0.0
