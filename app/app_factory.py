@@ -31,7 +31,7 @@ def create_app(config_filename):
 
     @app.route("/")
     def hello():
-        return f"Hello World!: DEBUG: {app.debug} Environment: {app.env}"
+        return f"Hello World!: DEBUG: {app.debug}"
 
     return app
 
