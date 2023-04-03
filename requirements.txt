@@ -1,5 +1,5 @@
 # Allows to subscribe to events and signals
-blinker==1.5
+blinker==1.6
 # Used to serve the application
 gunicorn==20.1.0
 # Flask libs
