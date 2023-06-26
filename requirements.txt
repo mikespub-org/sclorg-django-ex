@@ -13,5 +13,5 @@ psycopg2-binary==2.9.6
 # Used to serve static files using wsgi
 whitenoise==6.4.0
 # For testing
-pytest==7.3.2
+pytest==7.4.0
 pytest-cov==4.1.0
