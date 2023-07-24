@@ -1,7 +1,7 @@
 # Allows to subscribe to events and signals
 blinker==1.6.2
 # Used to serve the application
-gunicorn==20.1.0
+gunicorn==21.2.0
 # Flask libs
 Flask==2.3.2
 Flask-Env==2.0.0
