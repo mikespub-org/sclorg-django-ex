@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     build: .
-    image: "mikespub/sclorg-django-ex_web"
+    image: "mikespub/sclorg-flask-ex:latest"
     depends_on:
     - postgresql
     env_file:
