@@ -1,17 +1,17 @@
 # Allows to subscribe to events and signals
-blinker==1.6.2
+blinker==1.7.0
 # Used to serve the application
 gunicorn==21.2.0
 # Flask libs
-Flask==2.3.3
+Flask==3.0.2
 Flask-Env==2.0.0
-Flask-Migrate==4.0.4
-Flask-SQLAlchemy==3.0.5
+Flask-Migrate==4.0.5
+Flask-SQLAlchemy==3.1.1
 Flask-Testing==0.8.1
 # PostgreSQL driver
-psycopg2-binary==2.9.7
+psycopg2-binary==2.9.9
 # Used to serve static files using wsgi
-whitenoise==6.5.0
+whitenoise==6.6.0
 # For testing
-pytest==7.4.0
+pytest==8.0.2
 pytest-cov==4.1.0
